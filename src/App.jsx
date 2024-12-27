@@ -7,19 +7,27 @@ import useCurrencyInfo from './hooks/CurrencyInfo';
 
 function App() {
   const [amount,setAmount]=useState("");
-  const [from,setFrom]=useState("usd")
-const [to,setTo]=useState("inr");
+  const [from,setFrom]=useState("USD")
+const [to,setTo]=useState("INR");
 const [convertedAmount ,setConvertedAmount]=useState(0);
 const currencyInfo=useCurrencyInfo(from);
  const options=Object.keys(currencyInfo);
  const y=function swapcurrency(){
+  // const newFrom = to;
+  // const newTo = from;
   setFrom(to);
   setTo(from);
   setConvertedAmount(amount);
   setAmount(convertedAmount)
 
 }
- const isDisabled=true;
+// useEffect(() => {
+//   // Automatically trigger conversion when the 'from' or 'to' currency changes
+//   if (amount && currencyInfo[to]) {
+//     setConvertedAmount(amount * currencyInfo[to]);
+//   }
+// }, [from, to, amount, currencyInfo]);
+//  const isDisabled=true;
 
 const convert=()=>{
   setConvertedAmount(amount*currencyInfo[to]);
@@ -38,7 +46,7 @@ const convert=()=>{
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
-                            convert();
+                            // convert();
                            
                         }}
                     >
@@ -51,7 +59,7 @@ const convert=()=>{
                                   setFrom(currency)
                                 
                                 }}
-                                // amountDisable='false'
+                                
                                 onAmountChange={(amount)=>{
                                   setAmount(amount)
                                 }}
@@ -77,11 +85,11 @@ const convert=()=>{
                                 
                                 }}
                              
-                                disabled={isDisabled}
+                                disabled={true}
                                 selectCurrency={to}
                             />
                         </div>
-                        <button  type="submit" className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg">
+                        <button onClick={convert} type="submit" className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg">
                             Convert {from.toUpperCase()} to {to.toUpperCase()}
                         </button>
                     </form>
